@@ -16,6 +16,12 @@ class Module
 
     public function onException(MvcEvent $e)
     {
+        $exception = $e->getParam('exception');
+
+        if(isset($exception) == false){
+            return;
+        }
+
         $application    = $e->getApplication();
         $serviceManager = $application->getServiceManager();
         $config         = $serviceManager->get('config');
@@ -49,7 +55,7 @@ class Module
             }
 
             $logger->crit($e->getRequest());
-            $logger->crit($e->getParam('exception'));
+            $logger->crit($exception);
         }
     }
 
